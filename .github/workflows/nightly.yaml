@@ -4,7 +4,10 @@ on:
   schedule:
     - cron: '*/5 * * * *'
   workflow_dispatch:
-
+  pull_request:
+    paths:
+      - '.github/workflows/nightly.yaml'
+      - '!**/*.md'
 jobs:
   build_artifacts:
     name: Build for ${{ matrix.os }}
@@ -27,6 +30,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
+          ref: develop
           fetch-depth: 0
 
       - name: Setup Python
